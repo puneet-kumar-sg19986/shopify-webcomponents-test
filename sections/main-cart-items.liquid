@@ -79,6 +79,12 @@
 
               <tbody>
                 {%- for item in cart.items -%}
+                  <script>
+                    console.log({
+                      "item": {{item | json}},
+                      "item_components": {{item.item_components | json}}
+                    })
+                  </script>
                   <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
                     <td class="cart-item__media">
                       {% if item.image %}
@@ -102,7 +108,7 @@
                         <p class="caption-with-letter-spacing">{{ item.product.vendor }}</p>
                       {%- endif -%}
 
-                      <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
+                      <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.title | escape }}</a>
 
                       {%- if item.original_price != item.final_price -%}
                         <div class="cart-item__discounted-prices">
@@ -165,10 +171,50 @@
                         {%- for discount in item.line_level_discount_allocations -%}
                           <li class="discounts__discount">
                             {%- render 'icon-discount' -%}
-                            {{ discount.discount_application.title }}
+                            {{ discount.discount_application.title | escape }}
                           </li>
                         {%- endfor -%}
                       </ul>
+                      <ul class="item_components_list">
+                     {%  style %}
+                       .item_components_list{
+                          display:grid;
+                         padding-left:0.5rem;
+                         padding-top:2rem;
+                         
+                       }
+                         .item_component{
+                           display:grid;
+                           grid-auto-flow: column;
+                           gap:1rem;
+                         }
+                        .item_component .cart-item__media {
+                          width:50px
+                          }
+                      {% endstyle %}
+                        {%  assign components = item.item_components | reverse %}
+                       {%- for component in components -%}
+                         <li class="item_component">
+                           <div class="cart-item__media">
+                            {% if component.image %}
+                              {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
+                              <a href="{{ component.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>
+                              <div class="cart-item__image-container gradient global-media-settings">
+                                <img
+                                  src="{{ component.image | image_url: width: 200 }}"
+                                  class="cart-item__image"
+                                  alt="{{ component.image.alt | escape }}"
+                                  loading="lazy"
+                                  width="100"
+                                  height="{{ 100 | divided_by: component.image.aspect_ratio | ceil }}"
+                                >
+                              </div>
+                            {% endif %}
+                             </div>
+                            <a href="{{ item.url }}" class="cart-item__name h4 break">{{ component.title | escape }}</a>
+                          </li>
+                       {%- endfor -%}
+                      </ul
                     </td>
 
                     <td class="cart-item__totals right medium-hide large-up-hide">
@@ -281,7 +327,7 @@
                             <a
                               href="{{ item.url_to_remove }}"
                               class="button button--tertiary"
-                              aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}"
+                              aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
                             >
                               {% render 'icon-remove' %}
                             </a>
