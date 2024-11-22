@@ -1,0 +1,33 @@
+{% assign product = all_products['airpods-3-case'] %}
+<!-- Replace 'sample-product-handle' with a dynamic product handle as needed -->
+
+<div class="page-width product-cards-container">
+  <product-card
+    data-name="{{ product.title | escape }}"
+    data-price="{{ product.price | money }}"
+    data-image="{{ product.featured_image | img_url: 'small' | escape }}"
+    data-url="{{ product.url }}"
+    data-vendor="{{ product.vendor }}"
+  >
+  </product-card>
+</div>
+
+{% schema %}
+{
+  "name": "section-product-card",
+  "tag": "section",
+  "class": "section section-product-card",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Card Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Card"
+    }
+  ]
+}
+{% endschema %}

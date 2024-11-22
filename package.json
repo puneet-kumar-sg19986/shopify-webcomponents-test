@@ -10,7 +10,7 @@
     "log": "shopify theme console -e prod",
     "dev": "vite",
     "dev-watch": "shopify theme dev -e prod",
-    "dev-shop": "npm run logout && npm run dev-push && npm run dev-watch",
+    "dev-shop": "npm run dev-push && npm run dev-watch",
     "dev-push": "shopify theme push -d -e prod",
     "dev-update": "shopify theme push -e prod -d",
     "theme-push": "npm run build && npm run logout && shopify theme push -e prod -n -x='*.json' -t",

@@ -1,5 +1,3 @@
-import "vite/modulepreload-polyfill";
-
 class ProductCard extends HTMLElement {
   constructor() {
     super();
@@ -21,7 +19,7 @@ class ProductCard extends HTMLElement {
 
   render(data) {
     this.shadowRoot.innerHTML = `
-  <style>
+<style>
 .product-card {
 	width: 220px;
 	background: #edebeb;
@@ -69,20 +67,21 @@ class ProductCard extends HTMLElement {
 .product-info {
 	padding: 10px;
 }
-  </style>
-    <div class="product-card">
-        <a class="product__link" href=${data.url}>
-            <div class="product-img">
-                <img src="${data.image}" />
-            </div>
-            <div class="product-info">
-                <h4 class="product-title">${data.name}</h4>
-                <span class="product-vendor">${data.product_vendor}</span>
-                <span class="product__regular__price">${data.price}</span>
-            </div>
-        </a>
-    </div>
-`;
+</style>
+          <div class="product-card ">
+              <a class="product__link" href=${data.url}>
+                  <div class="product-img">
+                      <img src="${data.image}" />
+                  </div>
+                  <div class="product-info">
+                      <h4 class="product-title">${data.name}</h4>
+                      <span class="product-vendor">${data.product_vendor}</span>
+                      <span class="product__regular__price">${data.price}</span>
+                  </div>
+              </a>
+          </div>
+          </div>
+          `;
   }
 }
 
